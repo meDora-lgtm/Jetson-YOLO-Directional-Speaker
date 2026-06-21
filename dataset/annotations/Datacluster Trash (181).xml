@@ -1,0 +1,26 @@
+<annotation>
+	<folder>trash</folder>
+	<filename>Datacluster Trash (181).jpg</filename>
+	<path>F:\datacluster_work\data\trash\trash\Datacluster Trash (181).jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>3120</width>
+		<height>4160</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>trash</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>883</xmin>
+			<ymin>1137</ymin>
+			<xmax>2270</xmax>
+			<ymax>2317</ymax>
+		</bndbox>
+	</object>
+</annotation>
