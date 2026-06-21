@@ -1,6 +1,6 @@
 # Capstone Project: Jetson Nano 기반 객체 추적 및 경보 시스템
 
-이 프로젝트는 NVIDIA Jetson 보드와 IMX708 카메라, ServoKit 팬/틸트(Pan/Tilt) 모터, YOLOv8(yolo26n) 모델을 활용하여 실시간으로 사람 및 객체(컵)를 탐지하고 추적 및 오디오 경보를 수행하는 시스템입니다.
+이 프로젝트는 NVIDIA Jetson 보드와 ServoKit 팬/틸트(Pan/Tilt) 모터, YOLOv8(yolo26n) 모델을 활용하여 실시간으로 사람 및 객체(컵)를 탐지하고 추적 및 오디오 경보를 수행하는 시스템입니다.
 
 ---
 
@@ -29,9 +29,9 @@ Capstone_projects/
 │   ├── final_intro.py ~ final_intro_2.py
 │   └── cup_tracking_fast_interruptible_return_*.py
 │
-├── main.py                     # [최신] 실시간 사람 및 컵 분리 추적 프로그램
-├── main_intro.py               # [최신] 인트로 및 사람 그룹 안내 방송 프로그램
-├── cup_tracking.py             # [최신] 컵 소유자 분리 탐지 및 추적 복귀 프로그램
+├── main.py                     # 실시간 사람 및 컵 분리 추적 프로그램
+├── main_intro.py               # 인트로 및 사람 그룹 안내 방송 프로그램
+├── cup_tracking.py             # 컵 소유자 분리 탐지 및 추적 복귀 프로그램
 ├── cup_tracking_mac_stream.py  # 젯슨 카메라 영상을 맥북으로 스트리밍하는 컵 추적 프로그램
 ├── yolo_basic_model.py         # YOLO 모델 기반의 단순 GPU 사람 검출 및 테스트 프로그램
 ├── export_yolo26_engine.py     # .pt 가중치를 TensorRT (.engine) 파일로 컴파일하는 스크립트
