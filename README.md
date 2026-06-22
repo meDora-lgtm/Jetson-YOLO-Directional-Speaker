@@ -9,14 +9,14 @@
 ```text
 Capstone_projects/
 ├── assets/                     # 프로젝트 리소스 폴더
-│   ├── audio/                  # 경보 및 안내 방송 오디오 (.wav, .mp3)
-│   │   ├── hello_sos.mp3
-│   │   ├── hello_sos.wav
-│   │   ├── warning.mp3
+│   ├── audio/                  # 경보 및 안내 방송 오디오 (.wav, .mp3) 
+│   │   ├── hello_sos.mp3       # "sos팀입니다 안녕하세요" 오디오 파일
+│   │   ├── hello_sos.wav       
+│   │   ├── warning.mp3         # "쓰레기를 제대로 버리세요" 오디오 파일
 │   │   └── warning.wav
 │   └── models/                 # YOLO 모델 가중치 파일
 │       ├── yolo26n.pt          # PyTorch 가중치
-│       ├── yolo26n.onnx        # ONNX 포맷
+│       ├── yolo26n.onnx        # ONNX 포맷 -> 어떤 하드웨어 도구든 이 모델의 구조 이해할 수 있게 변형
 │       ├── yolo26n.engine      # TensorRT Engine (젯슨 가속용)
 │       └── yolo26n_960.engine
 │
@@ -24,15 +24,13 @@ Capstone_projects/
 │   ├── images/                 # 쓰레기/객체 이미지 파일들 (.jpg)
 │   └── annotations/            # Pascal VOC 형식의 XML 라벨링 파일들 (.xml)
 │
-├── archive/                    # 이전 버전 파일 백업 보관소
+├── archive/                    # 이전 버전 파일 백업 보관소. 업그레이드 단계별 정리 파일들
 │   ├── final_1.py ~ final_5.py
 │   ├── final_intro.py ~ final_intro_2.py
 │   └── cup_tracking_fast_interruptible_return_*.py
 │
 ├── main.py                     # 실시간 사람 및 컵 분리 추적 프로그램
 ├── main_intro.py               # 인트로 및 사람 그룹 안내 방송 프로그램
-├── cup_tracking.py             # 컵 소유자 분리 탐지 및 추적 복귀 프로그램
-├── cup_tracking_mac_stream.py  # 젯슨 카메라 영상을 맥북으로 스트리밍하는 컵 추적 프로그램
 ├── yolo_basic_model.py         # YOLO 모델 기반의 단순 GPU 사람 검출 및 테스트 프로그램
 ├── export_yolo26_engine.py     # .pt 가중치를 TensorRT (.engine) 파일로 컴파일하는 스크립트
 ├── .gitignore                  # Git 커밋 제외 설정 파일
@@ -51,16 +49,10 @@ Capstone_projects/
    - 카메라 뷰에 사람이 등장하면 인트로 오디오 안내 방송(`assets/audio/hello_sos.mp3`)을 송출합니다.
    - 단체(그룹)로 사람이 감지되었을 때 순차적으로 타겟팅하여 얼굴/사람 중심 방향으로 카메라가 바라볼 수 있도록 추적합니다.
 
-3. **`cup_tracking.py`**
-   - 컵과 사람이 분리되는 이벤트(Cup Separation)를 감지하고, 해당 인원을 경고음과 함께 추적하다가 컵으로 복귀하면 원격 상태로 원위치시키는 핵심 알고리즘이 적용된 스크립트입니다.
-
-4. **`cup_tracking_mac_stream.py`**
-   - 젯슨의 화면 장치가 없을 때 실시간 프레임을 UDP 통신(FFmpeg/GStreamer)을 통해 맥북으로 고속 송출하면서 동작을 모니터링할 수 있는 파일입니다.
-
-5. **`export_yolo26_engine.py`**
+3. **`export_yolo26_engine.py`**
    - 젯슨 GPU 하드웨어 가속을 극대화하기 위해 `yolo26n.pt`를 TensorRT `.engine` 파일로 빌드 및 내보내는 도구입니다.
 
-6. **`yolo_basic_model.py`**
+4. **`yolo_basic_model.py`**
    - 기본적인 실시간 카메라 테스트용도로, 화면 중심과 검출 객체 간의 픽셀 에러를 계산하여 화면에 표시합니다.
 
 ---
@@ -93,5 +85,4 @@ python3 main_intro.py
 
 ## ⚠️ 주의 사항 (Important Notes)
 
-- **TensorRT Engine 호환성**: `assets/models/*.engine` 파일은 빌드한 기기의 **GPU 아키텍처 및 TensorRT 버전**에 종속됩니다. 다른 환경에서 이 리포지토리를 복제(Clone)하여 실행할 경우, `export_yolo26_engine.py` 스크립트를 사용하여 다시 엔진 파일을 생성해 주어야 합니다.
-- **오디오 출력 장치 설정 Plughw**: 스크립트 내 오디오 출력 장치(`plughw:CARD=Audio,DEV=0`)는 사용하시는 ALSA USB 오디오 카드 상태에 따라 변경될 수 있습니다. `aplay -l` 명령어로 출력 카드를 확인 후 적절히 수정하십시오.
+- **TensorRT Engine 호환성**: `assets/models/*.engine` 파일은 빌드한 기기의 **GPU 아키텍처 및 TensorRT 버전**에 종속됩니다. 다른 환경에서 이 리포지토리를 복제(Clone)하여 실행할 경우, `export_yolo26_engine.py` 스크립트를 사용하여 다시 엔진 파일을 생성해 주어야 합니다. 처음에 YOLO26n.py 파일을 다운로드 받은다음, 이를 .engine 형식으로 변형해서 연산 작용을 수월하게 만들어 줍니다. 그러므로, 파일 형식을 바꿔주는 스텝이 중요합니다.
